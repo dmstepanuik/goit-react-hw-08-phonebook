@@ -1,0 +1,13 @@
+.form {
+  border: 15px solid grey;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.field {
+  border: 15px solid violet;
+}
+.label {
+  display: flex;
+  gap: 15px;
+}
