@@ -32,6 +32,7 @@ export const phoneBookSlice = createSlice({
       state.contacts.items = payload;
     });
     builder.addCase(addContact.fulfilled, (state, { payload }) => {
+      console.log(payload);
       state.contacts.items.push(payload);
     });
     builder.addCase(deleteContact.fulfilled, (state, { payload }) => {
