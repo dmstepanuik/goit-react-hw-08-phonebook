@@ -1,7 +1,6 @@
-import { createSlice, current } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import persistReducer from 'redux-persist/es/persistReducer';
 import { authOperations } from './auth.operations';
-import { token } from './authContacts.api';
 import storage from 'redux-persist/lib/storage';
 
 const initialState = {
