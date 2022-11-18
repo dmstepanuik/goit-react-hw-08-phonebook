@@ -8,10 +8,11 @@ import {
   REGISTER,
 } from 'redux-persist/es/constants';
 import { persistStore } from 'redux-persist';
-import { persistedPhoneBookReduser } from './phoneBook.slice';
+// import { persistedPhoneBookReduser } from './phoneBook.slice';
+import { rootReducer } from './rootReducer';
 
 export const store = configureStore({
-  reducer: persistedPhoneBookReduser,
+  reducer: rootReducer,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {

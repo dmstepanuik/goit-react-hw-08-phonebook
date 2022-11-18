@@ -1,7 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, current } from '@reduxjs/toolkit';
+import persistReducer from 'redux-persist/es/persistReducer';
 import { authOperations } from './auth.operations';
-// import { persistReducer } from 'redux-persist';
-// import storage from 'redux-persist/lib/storage';
+import { token } from './authContacts.api';
+import storage from 'redux-persist/lib/storage';
 
 const initialState = {
   user: { name: null, email: null },
@@ -10,31 +11,52 @@ const initialState = {
   isFetchingCurrentUser: false,
 };
 
-export const authkSlice = createSlice({
+export const authSlice = createSlice({
   name: 'auth',
   initialState,
   extraReducers: ({ addCase }) => {
     addCase(authOperations.register.fulfilled, (state, { payload }) => {
-      console.log(payload);
+      state.user = payload.user;
+      state.token = payload.token;
+      state.isLoggedIn = true;
     });
-    // addCase(addContact.fulfilled, (state, { payload }) => {
-    //   console.log(payload);
-    //   state.contacts.items.push(payload);
-    // });
-    // addCase(deleteContact.fulfilled, (state, { payload }) => {
-    //   state.contacts.items = state.contacts.items.filter(
-    //     it => it.id !== payload.id
-    //   );
-    // });
+    addCase(authOperations.logIn.fulfilled, (state, { payload }) => {
+      state.user = payload.user;
+      state.token = payload.token;
+      state.isLoggedIn = true;
+    });
+    addCase(authOperations.logOut.fulfilled, state => {
+      state.user = initialState.user;
+      state.token = initialState.token;
+      state.isLoggedIn = false;
+    });
+    addCase(authOperations.logOut.rejected, state => {
+      state.isLoggedIn = false;
+    });
+
+    addCase(authOperations.current.fulfilled, (state, { payload }) => {
+      console.log('payload fulfilled :>> ', payload);
+      state.user.name = payload.name;
+      state.user.email = payload.email;
+      state.token = payload.token;
+      state.isLoggedIn = true;
+    });
+
+    addCase(authOperations.current.rejected, state => {
+      console.log('payload rejected :>> ');
+      state.user = initialState.user;
+      state.token = initialState.token;
+      state.isLoggedIn = false;
+    });
   },
 });
 
-// const persistConfig = {
-//   key: 'react-07-phonebook',
-//   storage,
-// };
+const persistConfig = {
+  key: 'react-08-auth',
+  storage,
+};
 
-// export const persistedPhoneBookReduser = persistReducer(
-//   persistConfig,
-//   phoneBookSlice.reducer
-// );
+export const persistedAuthReduser = persistReducer(
+  persistConfig,
+  authSlice.reducer
+);

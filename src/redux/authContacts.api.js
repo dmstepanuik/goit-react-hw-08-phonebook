@@ -6,9 +6,11 @@ export const authContactsAxios = axios.create({
 
 export const token = {
   set(tokenStr) {
-    authContactsAxios.defaults.headers.Authorization = `Bearer ${tokenStr}`;
+    authContactsAxios.defaults.headers.common['Authorization'] = tokenStr
+      ? `Bearer ${tokenStr}`
+      : '';
   },
   unset() {
-    authContactsAxios.defaults.headers.Authorization = '';
+    this.set();
   },
 };
