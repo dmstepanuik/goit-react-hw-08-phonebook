@@ -35,7 +35,6 @@ export const authSlice = createSlice({
     });
 
     addCase(authOperations.current.fulfilled, (state, { payload }) => {
-      console.log('payload fulfilled :>> ', payload);
       state.user.name = payload.name;
       state.user.email = payload.email;
       state.token = payload.token;
@@ -43,7 +42,6 @@ export const authSlice = createSlice({
     });
 
     addCase(authOperations.current.rejected, state => {
-      console.log('payload rejected :>> ');
       state.user = initialState.user;
       state.token = initialState.token;
       state.isLoggedIn = false;

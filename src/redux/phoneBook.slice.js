@@ -32,7 +32,6 @@ export const phoneBookSlice = createSlice({
       state.contacts.items = payload;
     });
     builder.addCase(addContact.fulfilled, (state, { payload }) => {
-      console.log(payload);
       state.contacts.items.push(payload);
     });
     builder.addCase(deleteContact.fulfilled, (state, { payload }) => {
@@ -44,7 +43,7 @@ export const phoneBookSlice = createSlice({
 });
 
 const persistConfig = {
-  key: 'react-07-phonebook',
+  key: 'react-08-phonebook',
   storage,
 };
 

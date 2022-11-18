@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { phoneBookSlice } from 'redux/phoneBook.slice';
+import { contactsFilterSelector } from 'redux/selectors';
 
 export default function SearchForm() {
-  const filter = useSelector(state => state.filter);
+  const filter = useSelector(contactsFilterSelector);
   const dispatch = useDispatch();
   const onChange = e => {
     const value = e.target.value.trim().toLowerCase();

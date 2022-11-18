@@ -1,4 +1,5 @@
 import useEffectOnce from 'hooks/useEffectOnce';
+import { ContactsPage } from 'pages/ContactsPage/ContactsPage';
 import LoginPage from 'pages/LoginPage/LoginPage';
 import NotFoundPage from 'pages/NotFoundPage/NotFoundPage';
 import RegisterPage from 'pages/RegisterPage/RegisterPage';
@@ -9,6 +10,7 @@ import { token } from 'redux/authContacts.api';
 import { tokenSelector } from 'redux/selectors';
 import Navigation from './Navigation/Navigation';
 import PrivateRoute from './routes/PrivateRoute';
+import PublicRoute from './routes/PublicRoute';
 
 export function App() {
   const storeToken = useSelector(tokenSelector);
@@ -26,11 +28,21 @@ export function App() {
         <Route
           path="/contacts"
           element={
-            <PrivateRoute redirectTo="/" element={<h1>PrivateRoute</h1>} />
+            <PrivateRoute redirectTo="/login" element={<ContactsPage />} />
           }
         />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute element={<LoginPage />} redirectTo="/contacts" />
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <PublicRoute element={<RegisterPage />} redirectTo="/contacts" />
+          }
+        />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>

@@ -7,12 +7,12 @@ import s from './Navigation.module.scss';
 
 export default function Navigation() {
   const isLoggedIn = useSelector(isLoggedInSelector);
-  // console.log('isLoggedIn :>> ', isLoggedIn);
+
   return (
     <div className={s.container}>
-      <NavLink to={'/contacts'}>Contacts</NavLink>
-      <NavLink to={'/login'}>Login</NavLink>
-      <NavLink to={'/register'}>Register</NavLink>
+      {isLoggedIn && <NavLink to={'/contacts'}>Contacts</NavLink>}
+      {!isLoggedIn && <NavLink to={'/login'}>Login</NavLink>}
+      {!isLoggedIn && <NavLink to={'/register'}>Register</NavLink>}
       {isLoggedIn && <UserMenu />}
     </div>
   );

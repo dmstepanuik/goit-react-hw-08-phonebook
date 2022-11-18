@@ -4,7 +4,7 @@ import { authContactsAxios, token } from './authContacts.api';
 const register = createAsyncThunk('auth/register', async credential => {
   try {
     const { data } = await authContactsAxios.post('/users/signup', credential);
-    console.log('data :>> ', data);
+
     token.set(data.token);
     return data;
   } catch (error) {
@@ -33,10 +33,9 @@ const logOut = createAsyncThunk('auth/logout', async () => {
   }
 });
 const current = createAsyncThunk('auth/current', async (_, thunkAPI) => {
-  console.log('thunkAPI :>> ', thunkAPI);
   try {
     const { data } = await authContactsAxios.get('/users/current');
-    console.log('data ok :>> ', data);
+
     return data;
   } catch (error) {
     console.log('error', error);
